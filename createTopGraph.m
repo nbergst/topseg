@@ -1,11 +1,11 @@
-% [edgeEnds nodeList] = createTopGraph(file);
-% Creates an Nx2 array of connections in a graph
+% [adj nodeList] = createTopGraph(file);
+% Creates an NxN array indicating the connections in a graph
 % Input:
 %     file - Filename to file containing connections to a graph
 % Outputs:
-%     edgeEnds - Nx2 array of graph connections
+%     adj - NxN array of graph connections (ones where connection exists)
 %     nodeList - N cell of node names
-function [edgeEnds nodeList] = createTopGraph(file)
+function [adj nodeList] = createTopGraph(file)
 
 % Create node list
 nodeList = {};
@@ -25,6 +25,12 @@ while 1
     
     edgeEnds = [edgeEnds;i1 i2];
     
+end
+
+adj = zeros(numel(nodeList));
+for i=1:size(edgeEnds,1)
+    adj(edgeEnds(i,1), edgeEnds(i,2)) = 1;
+    adj(edgeEnds(i,2), edgeEnds(i,1)) = 1;
 end
 
 fclose(fid);
