@@ -14,7 +14,8 @@ and creates one matrix adj, and one cell array nodeList.
 nodeList is a conversion table between the literals A,B,C
 to numbers 1,2,3 etc.
 adj holds the graph structure. It is a NxN matrix with ones
-for pairs of nodes that are connected
+corresponding to pairs of nodes that are connected, and zeroes
+otherwise.
 
 
 
@@ -30,4 +31,6 @@ where the literal denotes the node id and the numerals the
 attribute values. A matrix nodeAttributes is returned
 where each row of numerals in the text file corresponds
 to one row in the matrix according to a lookup given
-by the nodeVals parameter
+by the nodeVals parameter.
+
+
