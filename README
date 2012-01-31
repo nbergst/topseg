@@ -1,3 +1,33 @@
 For this to work all folders of the UGM-library needs to be in the MATLAB-path
 
 http://www.di.ens.fr/~mschmidt/Software/UGM.html
+
+---------------- Matlab functions -------------------
+[adj nodeList] = createTopGrap(file)
+
+Takes a text-file with graph connections on format
+A B
+A C
+B C
+...
+and creates one matrix adj, and one cell array nodeList.
+nodeList is a conversion table between the literals A,B,C
+to numbers 1,2,3 etc.
+adj holds the graph structure. It is a NxN matrix with ones
+for pairs of nodes that are connected
+
+
+
+nodeAttributes = readAttributes(file,nodeVals)
+
+Takes a text-file with node attributes and stores in a matrix
+The file should be on the format
+A 1 2 3
+B 2 3 1
+C 3 1 2
+...
+where the literal denotes the node id and the numerals the
+attribute values. A matrix nodeAttributes is returned
+where each row of numerals in the text file corresponds
+to one row in the matrix according to a lookup given
+by the nodeVals parameter
