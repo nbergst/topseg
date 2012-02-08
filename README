@@ -3,6 +3,18 @@ For this to work all folders of the UGM-library needs to be in the MATLAB-path
 http://www.di.ens.fr/~mschmidt/Software/UGM.html
 
 ---------------- Matlab functions -------------------
+[graphStruct nodePot edgePot] = main( id )
+
+Takes an id of the floor plan and creates a graph with corresponding
+structure. Running
+labels = UGM_Decode_MaxOfMarginals(nodePot,edgePot,edgeStruct,@UGM_Infer_LBP);
+will generate a labeling, and
+ graphViz4Matlab('-adjMat',edgeStruct.adj, '-nodeLabels', edgeStruct.labels, '-undirected', true, '-nodeColors', clrs,'-types',labels);
+will draw the graph. This graph will have the ground truth in text, and assigned labels as colors. For correctly colored labels, run
+labelGraph = createLabelGraph( edgeStruct.classes );
+graphViz4Matlab('-adjMat',labelGraph.adj, '-nodeLabels', labelGraph.labels, '-undirected', true, '-nodeColors', clrs,'-types',labelGraph.types);
+
+
 [adj nodeList] = createTopGrap(file)
 
 Takes a text-file with graph connections on format
@@ -32,5 +44,4 @@ attribute values. A matrix nodeAttributes is returned
 where each row of numerals in the text file corresponds
 to one row in the matrix according to a lookup given
 by the nodeVals parameter.
-
 
