@@ -13,11 +13,11 @@
 %       nodePot - A matrix containing probaility distributions for each
 %                 node over all labels
 %
-function nodePot = createNodePot( nodeList, nodeAttributes, dists )
+function nodePot = createNodePot( nodeList, nodes, dists, nStates )
 
 % MxN matrix where element (m,n) indicates the potential for node m
 % having label n (not necessarily normalized)
-nodePot = ones(numel(nodeList), size(dists,3));
+nodePot = ones(numel(nodeList), size(dists,2));
 
 % Goes through all nodes and computes observation likelihoods
 for i=1:numel(nodeList)
@@ -26,21 +26,27 @@ for i=1:numel(nodeList)
     % label. Assumes attributes are independent
     for l=1:size(dists,3)
         dist = dists(:,:,l);
-        for a=1:size(nodeAttributes,2)
+        for a=2:size(nodes{l}.attributes,2)
+            for c=1:size(dists,2)
             
-            nodePot(i,l) = nodePot(i,l)*getPotential(nodeAttributes(i,a),dist(:,i));
+                nodePot(i,c) = nodePot(i,c)*getPotential(nodes{i}.attributes(a),dist(:,c));
             
+            end
         end
     end
     
 end
 
+nodePot = nodePot(:,1:nStates);
 
 end
 
 
 function p = getPotential( attribute, dist )
 
-p = dist(attribute) / sum(dist);
+idx = floor(attribute/5)+1;
+
+
+p = dist(idx) / sum(dist);
 
 end

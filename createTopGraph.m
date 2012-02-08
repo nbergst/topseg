@@ -2,10 +2,12 @@
 % Creates an NxN array indicating the connections in a graph
 % Input:
 %     file - Filename to file containing connections to a graph
+%     nStates - The number of possible states existing in the graph
 % Outputs:
-%     adj - NxN array of graph connections (ones where connection exists)
+%     edgeStruct - A structure used by UGM-lib containing the graph
+%     structure
 %     nodeList - N cell of node names
-function [adj nodeList] = createTopGraph(file)
+function [edgeStruct nodeList] = createTopGraph( file, nStates )
 
 % Create node list
 nodeList = {};
@@ -34,6 +36,11 @@ for i=1:size(edgeEnds,1)
 end
 
 fclose(fid);
+
+edgeStruct = UGM_makeEdgeStruct(adj,nStates,1,500);
+
+edgeStruct.adj = adj;
+edgeStruct.nodeIDs = nodeList;
 
 end
 

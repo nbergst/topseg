@@ -9,7 +9,7 @@
 % Outputs:
 %       nodeAttributes - a NxM array with attributes
 
-function nodeAttributes = readAttributes(file,nodeVals)
+function node = readAttributes(file,nodeList)
 
 fid = fopen(file,'r');
 
@@ -19,16 +19,22 @@ while 1
         break;
     end
     
-    [id vals] = splitString(tline);
-    
-    idx = find(strcmp(nodeVals,id) == 1);
+    [id vals class] = splitString(tline);
+    id = strrep(id,'-','_');
+    if ismember(id(1),'0123456789')
+        id(2:end+1) = id;
+        id(1) = 'S';
+    end
+     
+    idx = find(strcmp(nodeList,id) == 1);
     
     if isempty(idx)
-        nodeAttributes = [];
-        return;
+        continue;
     end
     
-    nodeAttributes(idx,:) = vals;
+    node{idx}.id = id;
+    node{idx}.attributes = vals;
+    node{idx}.class = class;
 end
 
 fclose(fid);
@@ -37,7 +43,7 @@ fclose(fid);
 end
 
 % Splits the string at the space character
-function [id vals] = splitString(s)
+function [id vals class] = splitString(s)
 
     delimiteridx = find(s == ' ');
     
@@ -49,9 +55,10 @@ function [id vals] = splitString(s)
     ss{i+1} = s(ptr:end);
     
     id = ss{1};
-    vals = zeros(1,numel(ss)-1);
-    for i=2:numel(ss)
+    vals = zeros(1,numel(ss)-2);
+    for i=2:numel(ss)-1
         vals(i-1) = str2double(ss{i});
     end
+    class = ss{i+1};
     
 end

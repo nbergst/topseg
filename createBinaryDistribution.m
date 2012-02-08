@@ -1,6 +1,6 @@
 function dist = createBinaryDistribution( file, nLabels )
 
-data = importfile(file);
+data = importdata(file);
 
 dist = data.data;
 

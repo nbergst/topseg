@@ -8,6 +8,9 @@
 
 function edgePot = createEdgePot( nEdges, edgePotentials )
 
-edgePot = repmat(edgePotentials, [1 1 nEdges]);
+%edgePot = repmat(edgePotentials, [1 1 nEdges]);
+
+edgePot = 2*ones( edgePotentials, edgePotentials, nEdges );% - ...
+    %repmat(eye(edgePotentials, edgePotentials), [1 1 nEdges]);
 
 end
